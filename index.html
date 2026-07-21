@@ -7,6 +7,14 @@
     <title>Krittika Research Foundation</title>
 
     <style>
+      @font-face {
+        font-family: "Neue Montreal";
+        src: url("assets/fonts/NeueMontreal-Medium.otf") format("opentype");
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+      }
+
       * {
         box-sizing: border-box;
       }
@@ -24,29 +32,25 @@
         overflow-x: hidden;
       }
 
-      .intro {
-        min-height: 100svh;
-        display: grid;
-        place-items: center;
-        padding: 2rem;
-      }
-
-      h1 {
-        margin: 0;
-        text-align: center;
-        font-size: clamp(2rem, 5vw, 5rem);
-        font-weight: 400;
-        letter-spacing: -0.04em;
-      }
-
       .project {
         width: min(100%, 112rem);
         margin: 0 auto;
-        padding: clamp(5rem, 14vw, 15rem) clamp(1.25rem, 5vw, 6rem)
+        padding: clamp(4rem, 9vw, 9rem) clamp(1.25rem, 5vw, 6rem)
           clamp(8rem, 18vw, 20rem);
       }
 
+      .project-title {
+        margin: 0 0 clamp(1.25rem, 2vw, 2rem) 8.25%;
+        font-family: "Neue Montreal", "Helvetica Neue", Arial, sans-serif;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: #666;
+      }
+
       .project-visual {
+        position: relative;
         margin: 0;
       }
 
@@ -61,6 +65,36 @@
         mix-blend-mode: multiply;
       }
 
+      .project-visual--cropped .image-crop {
+        position: relative;
+        aspect-ratio: 1530 / 665;
+        overflow: hidden;
+      }
+
+      .project-visual--cropped img {
+        transform: translateY(-17.68%);
+      }
+
+      .page-number-cover {
+        position: absolute;
+        z-index: 1;
+        width: clamp(1.5rem, 3vw, 3.25rem);
+        height: clamp(1rem, 2vw, 2rem);
+        transform: translate(-50%, -50%);
+        background: #fff;
+        pointer-events: none;
+      }
+
+      .page-number-cover--12 {
+        left: 50%;
+        top: 94.3%;
+      }
+
+      .page-number-cover--13 {
+        left: 50%;
+        top: 96.6%;
+      }
+
       @media (max-width: 700px) {
         .project {
           padding-inline: 0.75rem;
@@ -69,22 +103,26 @@
         .project-visual + .project-visual {
           margin-top: 7rem;
         }
+
+        .project-title {
+          margin-left: 8.25%;
+        }
       }
     </style>
   </head>
 
   <body>
     <main>
-      <header class="intro">
-        <h1>Krittika “Research Foundation”</h1>
-      </header>
-
       <section class="project" aria-label="Chennai flooding research project">
-        <figure class="project-visual">
-          <img
-            src="assets/chennai-flooding/01-introduction.jpg"
-            alt="Chennai flooding as a spatial condition: project introduction and aerial map"
-          />
+        <h1 class="project-title">Flooding as a spatial condition.</h1>
+
+        <figure class="project-visual project-visual--cropped">
+          <div class="image-crop">
+            <img
+              src="assets/chennai-flooding/01-introduction.jpg"
+              alt="Aerial map of Chennai and its water systems"
+            />
+          </div>
         </figure>
 
         <figure class="project-visual">
@@ -93,6 +131,7 @@
             alt="Chennai flooding context, field photographs, and selected project readings"
             loading="lazy"
           />
+          <span class="page-number-cover page-number-cover--12" aria-hidden="true"></span>
         </figure>
 
         <figure class="project-visual">
@@ -101,6 +140,7 @@
             alt="Archival map of Madras showing its historical water systems"
             loading="lazy"
           />
+          <span class="page-number-cover page-number-cover--13" aria-hidden="true"></span>
         </figure>
 
         <figure class="project-visual">
