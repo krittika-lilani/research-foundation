@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Krittika Research Foundation" />
+    <meta
+      name="description"
+      content="Krittika Research Foundation — an evolving landscape of research."
+    />
     <title>Krittika Research Foundation</title>
 
     <style>
@@ -15,142 +18,252 @@
         font-display: swap;
       }
 
+      :root {
+        color-scheme: dark;
+        --background: #020303;
+        --line-bright: rgba(220, 255, 248, 0.78);
+        --line-mid: rgba(149, 218, 207, 0.43);
+        --line-dim: rgba(118, 182, 173, 0.2);
+        --node: #d9fff8;
+      }
+
       * {
         box-sizing: border-box;
       }
 
-      html {
-        background: #fff;
-        scroll-behavior: smooth;
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+        background: var(--background);
       }
 
       body {
-        margin: 0;
-        background: #fff;
-        color: #111;
-        font-family: Arial, Helvetica, sans-serif;
-        overflow-x: hidden;
-      }
-
-      .project {
-        width: min(100%, 112rem);
-        margin: 0 auto;
-        padding: clamp(4rem, 9vw, 9rem) clamp(1.25rem, 5vw, 6rem)
-          clamp(8rem, 18vw, 20rem);
-      }
-
-      .project-title {
-        margin: 0 0 clamp(1.25rem, 2vw, 2rem) 8.25%;
-        font-family: "Neue Montreal", "Helvetica Neue", Arial, sans-serif;
-        font-size: 24px;
-        font-weight: 500;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        color: #666;
-      }
-
-      .project-visual {
-        position: relative;
-        margin: 0;
-      }
-
-      .project-visual + .project-visual {
-        margin-top: clamp(8rem, 18vw, 20rem);
-      }
-
-      .project-visual img {
-        display: block;
-        width: 100%;
-        height: auto;
-        mix-blend-mode: multiply;
-      }
-
-      .project-visual--cropped .image-crop {
-        position: relative;
-        aspect-ratio: 1530 / 665;
         overflow: hidden;
+        font-family: "Neue Montreal", "Helvetica Neue", Arial, sans-serif;
       }
 
-      .project-visual--cropped img {
-        transform: translateY(-17.68%);
+      .landing {
+        position: relative;
+        width: 100%;
+        min-height: 100svh;
+        overflow: hidden;
+        background:
+          radial-gradient(
+            ellipse at 50% 72%,
+            rgba(17, 66, 60, 0.16) 0%,
+            rgba(2, 3, 3, 0) 56%
+          ),
+          #020303;
+        isolation: isolate;
       }
 
-      .page-number-cover {
+      .network-landscape {
         position: absolute;
-        z-index: 1;
-        width: clamp(1.5rem, 3vw, 3.25rem);
-        height: clamp(1rem, 2vw, 2rem);
-        transform: translate(-50%, -50%);
-        background: #fff;
-        pointer-events: none;
+        inset: 0;
+        width: 100%;
+        height: 100%;
       }
 
-      .page-number-cover--12 {
-        left: 50%;
-        top: 94.3%;
+      .network-landscape path,
+      .network-landscape line,
+      .network-landscape polyline {
+        vector-effect: non-scaling-stroke;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
 
-      .page-number-cover--13 {
-        left: 50%;
-        top: 96.6%;
+      .horizon {
+        stroke: var(--line-bright);
+        stroke-width: 1.15;
+        filter: url("#soft-glow");
       }
 
-      @media (max-width: 700px) {
-        .project {
-          padding-inline: 0.75rem;
+      .ridge-secondary {
+        stroke: var(--line-mid);
+        stroke-width: 0.85;
+      }
+
+      .terrain {
+        stroke: var(--line-dim);
+        stroke-width: 0.72;
+      }
+
+      .cable {
+        stroke: var(--line-mid);
+        stroke-width: 0.9;
+      }
+
+      .cable--bright {
+        stroke: rgba(218, 255, 248, 0.64);
+      }
+
+      .node {
+        fill: var(--node);
+        filter: url("#node-glow");
+      }
+
+      .pulse {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: pulse 4.8s ease-in-out infinite;
+      }
+
+      .pulse:nth-of-type(2n) {
+        animation-delay: -1.7s;
+      }
+
+      .pulse:nth-of-type(3n) {
+        animation-delay: -3.1s;
+      }
+
+      .terrain-drift {
+        animation: drift 22s ease-in-out infinite alternate;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.35;
+          transform: scale(0.75);
         }
 
-        .project-visual + .project-visual {
-          margin-top: 7rem;
+        50% {
+          opacity: 1;
+          transform: scale(1.25);
+        }
+      }
+
+      @keyframes drift {
+        from {
+          transform: translateX(-5px);
         }
 
-        .project-title {
-          margin-left: 8.25%;
+        to {
+          transform: translateX(7px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .pulse,
+        .terrain-drift {
+          animation: none;
         }
       }
     </style>
   </head>
 
   <body>
-    <main>
-      <section class="project" aria-label="Chennai flooding research project">
-        <h1 class="project-title">Flooding as a spatial condition.</h1>
+    <main class="landing" aria-label="Krittika Research Foundation">
+      <svg
+        class="network-landscape"
+        viewBox="0 0 1600 900"
+        preserveAspectRatio="xMidYMid slice"
+        role="img"
+        aria-label="Abstract isometric network landscape"
+      >
+        <defs>
+          <filter id="soft-glow" x="-20%" y="-40%" width="140%" height="180%">
+            <feGaussianBlur stdDeviation="1.8" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="node-glow" x="-200%" y="-200%" width="400%" height="400%">
+            <feGaussianBlur stdDeviation="3.5" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <linearGradient id="fade-left" x1="0" x2="1">
+            <stop offset="0" stop-color="white" stop-opacity="0" />
+            <stop offset="0.12" stop-color="white" />
+            <stop offset="0.88" stop-color="white" />
+            <stop offset="1" stop-color="white" stop-opacity="0" />
+          </linearGradient>
+          <mask id="edge-fade">
+            <rect width="1600" height="900" fill="url(#fade-left)" />
+          </mask>
+        </defs>
 
-        <figure class="project-visual project-visual--cropped">
-          <div class="image-crop">
-            <img
-              src="assets/chennai-flooding/01-introduction.jpg"
-              alt="Aerial map of Chennai and its water systems"
+        <g mask="url(#edge-fade)">
+          <g class="terrain-drift">
+            <path
+              class="horizon"
+              d="M-80 225 L35 221 L101 228 L178 218 L246 226 L328 205 L390 211 L462 191 L534 198 L603 185 L672 202 L739 188 L811 199 L875 180 L948 192 L1015 175 L1080 186 L1153 171 L1226 184 L1290 168 L1365 181 L1435 173 L1510 189 L1680 176"
             />
-          </div>
-        </figure>
+            <path
+              class="ridge-secondary"
+              d="M-80 246 L68 241 L145 250 L222 235 L307 244 L380 229 L458 238 L535 222 L621 232 L702 216 L790 227 L871 209 L955 218 L1040 201 L1121 214 L1210 198 L1296 211 L1385 200 L1462 216 L1680 204"
+            />
+            <path
+              class="ridge-secondary"
+              d="M-80 202 L53 199 L126 207 L204 192 L286 199 L360 181 L442 190 L520 174 L598 183 L675 166 L754 180 L835 162 L916 175 L996 158 L1081 171 L1167 153 L1250 168 L1340 155 L1425 171 L1512 159 L1680 169"
+            />
+          </g>
 
-        <figure class="project-visual">
-          <img
-            src="assets/chennai-flooding/02-context.jpg"
-            alt="Chennai flooding context, field photographs, and selected project readings"
-            loading="lazy"
-          />
-          <span class="page-number-cover page-number-cover--12" aria-hidden="true"></span>
-        </figure>
+          <g class="terrain">
+            <polyline points="-110,786 800,185 1710,786" />
+            <polyline points="-190,846 800,185 1790,846" />
+            <polyline points="-10,724 800,185 1610,724" />
+            <polyline points="92,666 800,185 1508,666" />
+            <polyline points="188,610 800,185 1412,610" />
+            <polyline points="276,558 800,185 1324,558" />
+            <polyline points="358,510 800,185 1242,510" />
+            <polyline points="432,466 800,185 1168,466" />
+            <polyline points="500,426 800,185 1100,426" />
+            <polyline points="560,389 800,185 1040,389" />
+            <polyline points="614,355 800,185 986,355" />
+            <polyline points="662,324 800,185 938,324" />
 
-        <figure class="project-visual">
-          <img
-            src="assets/chennai-flooding/03-archival-map.jpg"
-            alt="Archival map of Madras showing its historical water systems"
-            loading="lazy"
-          />
-          <span class="page-number-cover page-number-cover--13" aria-hidden="true"></span>
-        </figure>
+            <path d="M-80 760 L1680 760" />
+            <path d="M-80 681 L1680 681" />
+            <path d="M-80 615 L1680 615" />
+            <path d="M-80 559 L1680 559" />
+            <path d="M-80 511 L1680 511" />
+            <path d="M-80 469 L1680 469" />
+            <path d="M-80 433 L1680 433" />
+            <path d="M-80 401 L1680 401" />
+            <path d="M-80 372 L1680 372" />
+            <path d="M-80 347 L1680 347" />
+            <path d="M-80 324 L1680 324" />
+            <path d="M-80 304 L1680 304" />
 
-        <figure class="project-visual">
-          <img
-            src="assets/chennai-flooding/04-hydrological-structure.jpg"
-            alt="Historical hydrological structure overlaid on contemporary Chennai"
-            loading="lazy"
-          />
-        </figure>
-      </section>
+            <path d="M-120 713 L139 700 L309 715 L476 682 L648 699 L820 663 L991 680 L1168 645 L1331 660 L1510 628 L1720 644" />
+            <path d="M-120 594 L116 575 L288 593 L461 563 L634 581 L808 548 L982 566 L1156 531 L1337 552 L1512 518 L1720 539" />
+            <path d="M-120 486 L104 466 L282 482 L457 454 L634 470 L808 439 L984 456 L1162 423 L1339 442 L1516 410 L1720 431" />
+          </g>
+
+          <g class="cable">
+            <path
+              class="cable--bright"
+              d="M-60 641 C154 623 205 557 390 571 C586 586 607 468 808 485 C1012 502 1031 395 1221 414 C1398 432 1484 348 1665 366"
+            />
+            <path d="M-80 526 C96 509 210 475 359 488 C518 502 612 420 777 436 C944 452 1048 374 1215 389 C1382 405 1478 329 1672 343" />
+            <path d="M-100 807 C103 776 255 761 424 728 C598 694 721 710 882 659 C1041 609 1214 633 1365 576 C1497 527 1582 534 1700 501" />
+            <path d="M77 842 C234 710 363 666 514 622 C661 578 726 524 858 486 C1004 443 1112 421 1240 367 C1368 313 1502 293 1635 267" />
+            <path d="M1545 844 C1397 721 1272 669 1113 625 C952 580 878 526 739 487 C582 444 475 419 344 363 C211 306 100 288 -46 263" />
+          </g>
+
+          <g aria-hidden="true">
+            <circle class="node pulse" cx="390" cy="571" r="3.1" />
+            <circle class="node pulse" cx="808" cy="485" r="3.1" />
+            <circle class="node pulse" cx="1221" cy="414" r="3.1" />
+            <circle class="node pulse" cx="359" cy="488" r="2.7" />
+            <circle class="node pulse" cx="777" cy="436" r="2.7" />
+            <circle class="node pulse" cx="1215" cy="389" r="2.7" />
+            <circle class="node pulse" cx="514" cy="622" r="2.6" />
+            <circle class="node pulse" cx="858" cy="486" r="2.6" />
+            <circle class="node pulse" cx="1240" cy="367" r="2.6" />
+            <circle class="node pulse" cx="1113" cy="625" r="2.6" />
+            <circle class="node pulse" cx="739" cy="487" r="2.6" />
+            <circle class="node pulse" cx="344" cy="363" r="2.6" />
+          </g>
+        </g>
+      </svg>
     </main>
   </body>
 </html>
