@@ -3,29 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Krittika Research Foundation — an evolving landscape of research."
-    />
-    <title>Krittika Research Foundation</title>
+    <title>Krittika Lilani</title>
 
     <style>
-      @font-face {
-        font-family: "Neue Montreal";
-        src: url("assets/fonts/NeueMontreal-Medium.otf") format("opentype");
-        font-style: normal;
-        font-weight: 500;
-        font-display: swap;
-      }
-
-      :root {
-        color-scheme: dark;
-        --background: #020303;
-        --line-bright: rgba(220, 255, 248, 0.78);
-        --line-mid: rgba(149, 218, 207, 0.43);
-        --line-dim: rgba(118, 182, 173, 0.2);
-        --node: #d9fff8;
-      }
+      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap");
 
       * {
         box-sizing: border-box;
@@ -33,237 +14,965 @@
 
       html,
       body {
-        min-height: 100%;
         margin: 0;
-        background: var(--background);
+        background: #fff;
       }
 
-      body {
-        overflow: hidden;
-        font-family: "Neue Montreal", "Helvetica Neue", Arial, sans-serif;
-      }
-
-      .landing {
+      .panel {
         position: relative;
-        width: 100%;
-        min-height: 100svh;
+        width: 100vw;
+        height: 100vh;
         overflow: hidden;
-        background:
-          radial-gradient(
-            ellipse at 50% 72%,
-            rgba(17, 66, 60, 0.16) 0%,
-            rgba(2, 3, 3, 0) 56%
-          ),
-          #020303;
-        isolation: isolate;
       }
 
-      .network-landscape {
+      .panel > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .investigative-caption {
+        position: absolute;
+        z-index: 1;
+        top: 7.333333%;
+        left: 10.347222%;
+        margin: 0;
+        color: #333;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.972222cqw;
+        font-weight: 500;
+        line-height: 1;
+        opacity: 1;
+        pointer-events: none;
+      }
+
+      .investigative-stage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: max(100vw, 160vh);
+        aspect-ratio: 1440 / 900;
+        transform: translate(-50%, -50%);
+        container-type: inline-size;
+      }
+
+      .investigative-stage img {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
+        object-fit: cover;
+        display: block;
       }
 
-      .network-landscape path,
-      .network-landscape line,
-      .network-landscape polyline {
-        vector-effect: non-scaling-stroke;
-        fill: none;
-        stroke-linecap: round;
-        stroke-linejoin: round;
+      .investigative-sequence {
+        position: relative;
+        height: 200vh;
       }
 
-      .horizon {
-        stroke: var(--line-bright);
-        stroke-width: 1.15;
-        filter: url("#soft-glow");
+      .investigative-panel {
+        position: sticky;
+        top: 0;
       }
 
-      .ridge-secondary {
-        stroke: var(--line-mid);
-        stroke-width: 0.85;
+      .investigative-stage .bomb-image {
+        opacity: 0;
+        transition: opacity 1.4s ease;
       }
 
-      .terrain {
-        stroke: var(--line-dim);
-        stroke-width: 0.72;
+      .investigative-panel.is-bomb-visible .bomb-image {
+        opacity: 1;
       }
 
-      .cable {
-        stroke: var(--line-mid);
-        stroke-width: 0.9;
+      .potential-stage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: max(100vw, 160vh);
+        aspect-ratio: 1440 / 900;
+        transform: translate(-50%, -50%);
+        container-type: inline-size;
       }
 
-      .cable--bright {
-        stroke: rgba(218, 255, 248, 0.64);
+      .potential-stage > img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
       }
 
-      .node {
-        fill: var(--node);
-        filter: url("#node-glow");
+      .potential-caption,
+      .potential-heading,
+      .potential-description {
+        position: absolute;
+        z-index: 1;
+        margin: 0;
+        font-family: "IBM Plex Mono", monospace;
+        pointer-events: none;
+        opacity: 0;
       }
 
-      .pulse {
-        transform-box: fill-box;
-        transform-origin: center;
-        animation: pulse 4.8s ease-in-out infinite;
+      .potential-caption {
+        top: 82.333333%;
+        left: 62.013889%;
+        color: #333;
+        font-size: 0.972222cqw;
+        font-weight: 500;
+        line-height: 1;
+        transition: opacity 0.6s ease;
       }
 
-      .pulse:nth-of-type(2n) {
-        animation-delay: -1.7s;
+      .potential-panel.is-caption-visible .potential-caption {
+        opacity: 1;
       }
 
-      .pulse:nth-of-type(3n) {
-        animation-delay: -3.1s;
+      .potential-heading {
+        color: #f24822;
+        font-size: 0.833333cqw;
+        font-weight: 400;
+        line-height: 1;
+        transition: opacity 0.6s ease;
       }
 
-      .terrain-drift {
-        animation: drift 22s ease-in-out infinite alternate;
+      .potential-heading--fragmentation {
+        top: 22%;
+        left: 22.152778%;
       }
 
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 0.35;
-          transform: scale(0.75);
-        }
-
-        50% {
-          opacity: 1;
-          transform: scale(1.25);
-        }
+      .potential-heading--separation {
+        top: 42.222222%;
+        left: 33.333333%;
+        transition-duration: 0.6s;
       }
 
-      @keyframes drift {
-        from {
-          transform: translateX(-5px);
-        }
-
-        to {
-          transform: translateX(7px);
-        }
+      .potential-heading--reopening {
+        top: 63%;
+        left: 16.597222%;
+        transition-duration: 0.6s;
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .pulse,
-        .terrain-drift {
-          animation: none;
-        }
+      .potential-panel.is-fragmentation-visible
+        .potential-heading--fragmentation,
+      .potential-panel.is-separation-visible .potential-heading--separation,
+      .potential-panel.is-reopening-visible .potential-heading--reopening {
+        opacity: 1;
+      }
+
+      .potential-description {
+        width: 20.833333cqw;
+        color: #999;
+        font-size: 0.833333cqw;
+        font-weight: 400;
+        line-height: 1.55;
+        text-align: center;
+        transition: opacity 0.8s ease;
+      }
+
+      .potential-description--fragmentation {
+        top: 24.333333%;
+        left: 15.069444%;
+      }
+
+      .potential-description--separation {
+        top: 44.555556%;
+        left: 26.319444%;
+      }
+
+      .potential-description--reopening {
+        top: 65.333333%;
+        left: 9.305556%;
+      }
+
+      .potential-panel.is-descriptions-visible .potential-description {
+        opacity: 1;
+      }
+
+      .lyd-panel {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: max(100vw, 160vh);
+        aspect-ratio: 1440 / 900;
+        transform: translate(-50%, -50%);
+        container-type: inline-size;
+      }
+
+      .lyd-base-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .lyd-caption {
+        position: absolute;
+        z-index: 1;
+        top: 60.666667%;
+        left: 17.291667%;
+        margin: 0;
+        color: #333;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.972222cqw;
+        font-weight: 500;
+        line-height: 1;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+      }
+
+      .lyd-panel.is-caption-visible .lyd-caption {
+        opacity: 1;
+      }
+
+      .lyd-video {
+        position: absolute;
+        z-index: 1;
+        top: 16.111111%;
+        left: 50.347222%;
+        width: 39.583333%;
+        height: 42.777778%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+      }
+
+      .lyd-video-copy {
+        position: absolute;
+        z-index: 1;
+        top: 63.555556%;
+        left: 50.347222%;
+        margin: 0;
+        color: #313131;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.833333cqw;
+        font-weight: 400;
+        line-height: 1.45;
+        opacity: 0;
+        transition: opacity 1.4s ease 1s;
+        pointer-events: none;
+      }
+
+      .lyd-video-copy p {
+        margin: 0 0 1.6em;
+      }
+
+      .lyd-panel.is-video-visible .lyd-video,
+      .lyd-panel.is-video-visible .lyd-video-copy {
+        opacity: 1;
+      }
+
+      .lyd-panel .lyd-portrait {
+        position: absolute;
+        z-index: 1;
+        object-fit: cover;
+        display: block;
+        opacity: 0;
+        transition: opacity 1.4s ease;
+        pointer-events: none;
+        transform: none;
+      }
+
+      .lyd-portrait--top {
+        top: 63.555556%;
+        height: 6.111111cqw;
+      }
+
+      .lyd-portrait--bottom {
+        top: 74.666667%;
+        height: 6.527778cqw;
+      }
+
+      .lyd-portrait--animated {
+        left: 72.847222%;
+        width: 6.180556cqw;
+      }
+
+      .lyd-portrait--real {
+        left: 79.027778%;
+      }
+
+      .lyd-portrait--real.lyd-portrait--top {
+        width: 10.694444cqw;
+      }
+
+      .lyd-portrait--real.lyd-portrait--bottom {
+        width: 7.569444cqw;
+      }
+
+      .lyd-panel .lyd-portrait--animated.lyd-portrait--top {
+        object-position: left center;
+      }
+
+      .lyd-panel.is-animated-visible .lyd-portrait--animated,
+      .lyd-panel.is-real-visible .lyd-portrait--real {
+        opacity: 1;
+      }
+
+      .lyd-panel .lyd-location {
+        position: absolute;
+        z-index: 1;
+        top: 86.444444%;
+        height: 4.861111cqw;
+        object-fit: cover;
+        display: block;
+        opacity: 0;
+        transition: opacity 1.4s ease;
+        pointer-events: none;
+        transform: none;
+      }
+
+      .lyd-location--animated {
+        left: 72.847222%;
+        width: 8.333333cqw;
+      }
+
+      .lyd-location--real {
+        left: 81.111111%;
+        width: 8.611111cqw;
+      }
+
+      .lyd-panel.is-animated-visible .lyd-location--animated,
+      .lyd-panel.is-real-visible .lyd-location--real {
+        opacity: 1;
+      }
+
+      .dimensionality-stage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: max(100vw, 160vh);
+        aspect-ratio: 1440 / 900;
+        transform: translate(-50%, -50%);
+        container-type: inline-size;
+      }
+
+      .dimensionality-stage > img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .dimensionality-base-image,
+      .dimensionality-final-image {
+        transition: opacity 1.4s ease;
+      }
+
+      .dimensionality-base-image {
+        z-index: 0;
+      }
+
+      .dimensionality-final-image {
+        z-index: 1;
+        opacity: 0;
+      }
+
+      .dimensionality-panel.is-final-visible .dimensionality-base-image {
+        opacity: 0;
+      }
+
+      .dimensionality-panel.is-final-visible .dimensionality-caption {
+        opacity: 0;
+        transition-duration: 1.4s;
+      }
+
+      .dimensionality-panel.is-final-visible .dimensionality-final-image {
+        opacity: 1;
+      }
+
+      .dimensionality-caption {
+        position: absolute;
+        z-index: 1;
+        top: 40.666667%;
+        left: 68.611111%;
+        margin: 0;
+        color: #333;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.972222cqw;
+        font-weight: 500;
+        line-height: 1.5;
+        letter-spacing: -0.022em;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+        pointer-events: none;
+      }
+
+      .dimensionality-panel.is-caption-visible .dimensionality-caption {
+        opacity: 1;
+      }
+
+      .dimensionality-panel.is-caption-visible.is-final-visible
+        .dimensionality-caption {
+        opacity: 0;
+        transition-duration: 1.4s;
+      }
+
+      .material-gesture-panel .material-state {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+      }
+
+      .material-gesture-panel .material-state:first-child {
+        opacity: 1;
+      }
+
+      .all-together-panel .all-together-state {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: opacity 1s ease;
+        pointer-events: none;
+      }
+
+      .all-together-final {
+        z-index: 1;
+        opacity: 0;
+      }
+
+      .all-together-initial {
+        z-index: 0;
+        opacity: 1;
+      }
+
+      .all-together-panel.is-final-visible .all-together-final {
+        opacity: 1;
+      }
+
+      .kashmir-panel .kashmir-state {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+      }
+
+      .kashmir-panel .kashmir-state:first-child {
+        opacity: 1;
+      }
+
+      .investigative-quote {
+        position: absolute;
+        z-index: 1;
+        top: 56.888889%;
+        left: 54.930556%;
+        margin: 0;
+        color: #313131;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.833333cqw;
+        font-weight: 400;
+        line-height: 1.55;
+        text-align: right;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 1.2s ease;
+        pointer-events: none;
+      }
+
+      .investigative-quote .accent {
+        color: #f24822;
+      }
+
+      .investigative-quote cite {
+        font-style: italic;
+      }
+
+      .investigative-panel.is-quote-revealed .investigative-quote {
+        opacity: 1;
       }
     </style>
   </head>
 
-  <body>
-    <main class="landing" aria-label="Krittika Research Foundation">
-      <svg
-        class="network-landscape"
-        viewBox="0 0 1600 900"
-        preserveAspectRatio="xMidYMid slice"
-        role="img"
-        aria-label="Abstract isometric network landscape"
-      >
-        <defs>
-          <filter id="soft-glow" x="-20%" y="-40%" width="140%" height="180%">
-            <feGaussianBlur stdDeviation="1.8" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <filter id="node-glow" x="-200%" y="-200%" width="400%" height="400%">
-            <feGaussianBlur stdDeviation="3.5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <linearGradient id="fade-left" x1="0" x2="1">
-            <stop offset="0" stop-color="white" stop-opacity="0" />
-            <stop offset="0.12" stop-color="white" />
-            <stop offset="0.88" stop-color="white" />
-            <stop offset="1" stop-color="white" stop-opacity="0" />
-          </linearGradient>
-          <mask id="edge-fade">
-            <rect width="1600" height="900" fill="url(#fade-left)" />
-          </mask>
-        </defs>
+  <body tabindex="-1">
+    <section class="panel">
+      <img src="images/00-intro.png" alt="Research presentation introduction" />
+    </section>
 
-        <g mask="url(#edge-fade)">
-          <g class="terrain-drift">
-            <path
-              class="horizon"
-              d="M-80 225 L35 221 L101 228 L178 218 L246 226 L328 205 L390 211 L462 191 L534 198 L603 185 L672 202 L739 188 L811 199 L875 180 L948 192 L1015 175 L1080 186 L1153 171 L1226 184 L1290 168 L1365 181 L1435 173 L1510 189 L1680 176"
-            />
-            <path
-              class="ridge-secondary"
-              d="M-80 246 L68 241 L145 250 L222 235 L307 244 L380 229 L458 238 L535 222 L621 232 L702 216 L790 227 L871 209 L955 218 L1040 201 L1121 214 L1210 198 L1296 211 L1385 200 L1462 216 L1680 204"
-            />
-            <path
-              class="ridge-secondary"
-              d="M-80 202 L53 199 L126 207 L204 192 L286 199 L360 181 L442 190 L520 174 L598 183 L675 166 L754 180 L835 162 L916 175 L996 158 L1081 171 L1167 153 L1250 168 L1340 155 L1425 171 L1512 159 L1680 169"
-            />
-          </g>
+    <section class="investigative-sequence">
+      <div class="panel investigative-panel">
+        <div class="investigative-stage">
+          <img
+            class="precedent-image"
+            src="images/01-investigative-aesthetics.png"
+            alt="Investigative Aesthetics research frame"
+          />
+          <img
+            class="bomb-image"
+            src="images/01-investigative-aesthetics-bomb.png"
+            alt="Bomb composite research frame"
+          />
+          <p class="investigative-caption">fragments become evidence</p>
+          <p class="investigative-quote">
+            “The bomb is a <span class="accent">composite object,</span> its many<br />
+            components arrived from dozens of factories<br />
+            across Europe and the US. These <span class="accent">products are</span><br />
+            themselves <span class="accent">assembled from other products</span> drawn<br />
+            from hundreds of subcontractors, and these are<br />
+            supplied by providers of raw materials, which<br />
+            are in turn extracted from mines spread across<br />
+            the world. The bomb’s assembled structure is<br />
+            <span class="accent">coextensive with the global economy</span>.”<br />
+            <cite>(Investigative Aesthetics)</cite>
+          </p>
+        </div>
+      </div>
+    </section>
 
-          <g class="terrain">
-            <polyline points="-110,786 800,185 1710,786" />
-            <polyline points="-190,846 800,185 1790,846" />
-            <polyline points="-10,724 800,185 1610,724" />
-            <polyline points="92,666 800,185 1508,666" />
-            <polyline points="188,610 800,185 1412,610" />
-            <polyline points="276,558 800,185 1324,558" />
-            <polyline points="358,510 800,185 1242,510" />
-            <polyline points="432,466 800,185 1168,466" />
-            <polyline points="500,426 800,185 1100,426" />
-            <polyline points="560,389 800,185 1040,389" />
-            <polyline points="614,355 800,185 986,355" />
-            <polyline points="662,324 800,185 938,324" />
+    <section class="panel potential-panel">
+      <div class="potential-stage">
+        <img
+          src="images/02-potential-history.png"
+          alt="Potential History research frame"
+        />
 
-            <path d="M-80 760 L1680 760" />
-            <path d="M-80 681 L1680 681" />
-            <path d="M-80 615 L1680 615" />
-            <path d="M-80 559 L1680 559" />
-            <path d="M-80 511 L1680 511" />
-            <path d="M-80 469 L1680 469" />
-            <path d="M-80 433 L1680 433" />
-            <path d="M-80 401 L1680 401" />
-            <path d="M-80 372 L1680 372" />
-            <path d="M-80 347 L1680 347" />
-            <path d="M-80 324 L1680 324" />
-            <path d="M-80 304 L1680 304" />
+        <p class="potential-caption">the past is not finished</p>
 
-            <path d="M-120 713 L139 700 L309 715 L476 682 L648 699 L820 663 L991 680 L1168 645 L1331 660 L1510 628 L1720 644" />
-            <path d="M-120 594 L116 575 L288 593 L461 563 L634 581 L808 548 L982 566 L1156 531 L1337 552 L1512 518 L1720 539" />
-            <path d="M-120 486 L104 466 L282 482 L457 454 L634 470 L808 439 L984 456 L1162 423 L1339 442 L1516 410 L1720 431" />
-          </g>
+        <p class="potential-heading potential-heading--fragmentation">
+          fragmentation
+        </p>
+        <p class="potential-heading potential-heading--separation">
+          separation
+        </p>
+        <p class="potential-heading potential-heading--reopening">
+          re-opening
+        </p>
 
-          <g class="cable">
-            <path
-              class="cable--bright"
-              d="M-60 641 C154 623 205 557 390 571 C586 586 607 468 808 485 C1012 502 1031 395 1221 414 C1398 432 1484 348 1665 366"
-            />
-            <path d="M-80 526 C96 509 210 475 359 488 C518 502 612 420 777 436 C944 452 1048 374 1215 389 C1382 405 1478 329 1672 343" />
-            <path d="M-100 807 C103 776 255 761 424 728 C598 694 721 710 882 659 C1041 609 1214 633 1365 576 C1497 527 1582 534 1700 501" />
-            <path d="M77 842 C234 710 363 666 514 622 C661 578 726 524 858 486 C1004 443 1112 421 1240 367 C1368 313 1502 293 1635 267" />
-            <path d="M1545 844 C1397 721 1272 669 1113 625 C952 580 878 526 739 487 C582 444 475 419 344 363 C211 306 100 288 -46 263" />
-          </g>
+        <p class="potential-description potential-description--fragmentation">
+          fragments are not just found, they<br />
+          exist because imperialism created them<br />
+          through extraction
+        </p>
+        <p class="potential-description potential-description--separation">
+          imperial systems detach objects from<br />
+          the world they belonged to
+        </p>
+        <p class="potential-description potential-description--reopening">
+          asking us to re-open history,<br />
+          re-connect earlier relationships
+        </p>
+      </div>
+    </section>
 
-          <g aria-hidden="true">
-            <circle class="node pulse" cx="390" cy="571" r="3.1" />
-            <circle class="node pulse" cx="808" cy="485" r="3.1" />
-            <circle class="node pulse" cx="1221" cy="414" r="3.1" />
-            <circle class="node pulse" cx="359" cy="488" r="2.7" />
-            <circle class="node pulse" cx="777" cy="436" r="2.7" />
-            <circle class="node pulse" cx="1215" cy="389" r="2.7" />
-            <circle class="node pulse" cx="514" cy="622" r="2.6" />
-            <circle class="node pulse" cx="858" cy="486" r="2.6" />
-            <circle class="node pulse" cx="1240" cy="367" r="2.6" />
-            <circle class="node pulse" cx="1113" cy="625" r="2.6" />
-            <circle class="node pulse" cx="739" cy="487" r="2.6" />
-            <circle class="node pulse" cx="344" cy="363" r="2.6" />
-          </g>
-        </g>
-      </svg>
-    </main>
+    <section class="panel lyd-section">
+      <div class="lyd-panel">
+        <img
+          class="lyd-base-image"
+          src="images/03-lyd.png"
+          alt="Lyd research frame"
+        />
+        <video class="lyd-video" preload="metadata" playsinline>
+          <source src="media/lyd-recording.mp4" type="video/mp4" />
+        </video>
+        <div class="lyd-video-copy">
+          <p>
+            “Have you ever heard of the theory that<br />
+            claims that every event has multiple<br />
+            possible outcomes?”<br />
+            (Lyd)
+          </p>
+          <p>
+            “I don’t know what happened to me”<br />
+            (Lyd)
+          </p>
+        </div>
+        <img
+          class="lyd-portrait lyd-portrait--animated lyd-portrait--top"
+          src="images/lyd-animated-woman.png"
+          alt="Illustrated portrait of a woman"
+        />
+        <img
+          class="lyd-portrait lyd-portrait--real lyd-portrait--top"
+          src="images/lyd-real-woman.png"
+          alt="Portrait of a woman"
+        />
+        <img
+          class="lyd-portrait lyd-portrait--animated lyd-portrait--bottom"
+          src="images/lyd-animated-man.png"
+          alt="Illustrated portrait of a man"
+        />
+        <img
+          class="lyd-portrait lyd-portrait--real lyd-portrait--bottom"
+          src="images/lyd-real-man.png"
+          alt="Portrait of a man"
+        />
+        <img
+          class="lyd-location lyd-location--animated"
+          src="images/lyd-animated-location.png"
+          alt="Illustrated location"
+        />
+        <img
+          class="lyd-location lyd-location--real"
+          src="images/lyd-real-location.png"
+          alt="Real location"
+        />
+        <p class="lyd-caption">history opens a portal</p>
+      </div>
+    </section>
+
+    <section class="panel dimensionality-panel">
+      <div class="dimensionality-stage">
+        <img
+          class="dimensionality-base-image"
+          src="images/04-curse-of-dimensionality.png"
+          alt="Curse of Dimensionality research frame"
+        />
+        <img
+          class="dimensionality-final-image"
+          src="images/04-curse-of-dimensionality-2.png"
+          alt="Expanded Curse of Dimensionality research frame"
+        />
+        <p class="dimensionality-caption">
+          dimensions used to describe an event also<br />
+          shape how that event becomes visible
+        </p>
+      </div>
+    </section>
+
+    <section class="panel material-gesture-panel">
+      <img
+        class="material-state"
+        src="images/05-material-gesture.png"
+        alt="Material Gesture research frame"
+      />
+      <img
+        class="material-state"
+        src="images/05-material-gesture-2.png"
+        alt="Material Gesture research frame, state 2"
+      />
+      <img
+        class="material-state"
+        src="images/05-material-gesture-3.png"
+        alt="Material Gesture research frame, state 3"
+      />
+      <img
+        class="material-state"
+        src="images/05-material-gesture-4.png"
+        alt="Material Gesture research frame, state 4"
+      />
+      <img
+        class="material-state"
+        src="images/05-material-gesture-5.png"
+        alt="Material Gesture research frame, state 5"
+      />
+      <img
+        class="material-state"
+        src="images/05-material-gesture-6.png"
+        alt="Material Gesture research frame, state 6"
+      />
+    </section>
+
+    <section class="panel all-together-panel">
+      <img
+        class="all-together-state all-together-initial"
+        src="images/06-all-together.png"
+        alt="All Together research frame"
+      />
+      <img
+        class="all-together-state all-together-final"
+        src="images/06-all-together-2.png"
+        alt="All Together connected research frame"
+      />
+    </section>
+
+    <section class="panel kashmir-panel">
+      <img
+        class="kashmir-state"
+        src="images/07-kashmir.png"
+        alt="Kashmir research frame, state 1"
+      />
+      <img
+        class="kashmir-state"
+        src="images/07-kashmir-2.png"
+        alt="Kashmir research frame, state 2"
+      />
+      <img
+        class="kashmir-state"
+        src="images/07-kashmir-3.png"
+        alt="Kashmir research frame, state 3"
+      />
+      <img
+        class="kashmir-state"
+        src="images/07-kashmir-4.png"
+        alt="Kashmir research frame, state 4"
+      />
+      <img
+        class="kashmir-state"
+        src="images/07-kashmir-5.png"
+        alt="Kashmir research frame, state 5"
+      />
+    </section>
+
+    <section class="panel end-panel">
+      <img src="images/08-end.png" alt="Closing research questions" />
+    </section>
+
+    <script>
+      const investigativeSequence = document.querySelector(
+        ".investigative-sequence",
+      );
+      const investigativePanel = document.querySelector(".investigative-panel");
+      const investigativeStage = document.querySelector(".investigative-stage");
+      const precedentImage = document.querySelector(".precedent-image");
+      const investigativeQuote = document.querySelector(".investigative-quote");
+
+      function clamp(value, minimum, maximum) {
+        return Math.min(Math.max(value, minimum), maximum);
+      }
+
+      function updateInvestigativeTransition() {
+        const sequenceRect = investigativeSequence.getBoundingClientRect();
+        const scrollDistance = investigativeSequence.offsetHeight - window.innerHeight;
+        const progress = clamp(-sequenceRect.top / scrollDistance, 0, 1);
+        const quoteProgress = clamp(progress / 0.72, 0, 1);
+        const stageScale = investigativeStage.clientWidth / 1440;
+        const quoteWidth = investigativeQuote.offsetWidth / stageScale;
+        const quoteHeight = investigativeQuote.offsetHeight / stageScale;
+        const bombImageLeft = 538;
+        const bombImageBottom = 753;
+        const finalQuoteX = bombImageLeft - 30 - quoteWidth;
+        const finalQuoteY = bombImageBottom - quoteHeight;
+        const quoteX = 791 + (finalQuoteX - 791) * quoteProgress;
+        const quoteY = 512 + (finalQuoteY - 512) * quoteProgress;
+
+        investigativeQuote.style.left = `${(quoteX / 1440) * 100}%`;
+        investigativeQuote.style.top = `${(quoteY / 900) * 100}%`;
+        precedentImage.style.opacity = 1 - quoteProgress;
+        investigativePanel.classList.toggle(
+          "is-bomb-visible",
+          quoteProgress === 1,
+        );
+      }
+
+      function revealInvestigativeStep() {
+        if (!investigativePanel.classList.contains("is-quote-revealed")) {
+          investigativePanel.classList.add("is-quote-revealed");
+        }
+      }
+
+      window.addEventListener("scroll", updateInvestigativeTransition, {
+        passive: true,
+      });
+      window.addEventListener("resize", updateInvestigativeTransition);
+      updateInvestigativeTransition();
+
+      const potentialPanel = document.querySelector(".potential-panel");
+      let potentialClickCount = 0;
+
+      function revealPotentialStep() {
+        potentialClickCount += 1;
+
+        if (potentialClickCount === 1) {
+          potentialPanel.classList.add("is-caption-visible");
+        } else if (potentialClickCount === 2) {
+          potentialPanel.classList.add("is-fragmentation-visible");
+          window.setTimeout(() => {
+            potentialPanel.classList.add("is-separation-visible");
+          }, 200);
+          window.setTimeout(() => {
+            potentialPanel.classList.add("is-reopening-visible");
+          }, 400);
+        } else if (potentialClickCount === 3) {
+          potentialPanel.classList.add("is-descriptions-visible");
+        }
+      }
+
+      const lydPanel = document.querySelector(".lyd-panel");
+      const lydVideo = document.querySelector(".lyd-video");
+      let lydClickCount = 0;
+
+      function revealLydStep() {
+        lydClickCount += 1;
+
+        if (lydClickCount === 1) {
+          lydPanel.classList.add("is-caption-visible");
+        } else if (lydClickCount === 2) {
+          lydPanel.classList.add("is-video-visible");
+          lydVideo.currentTime = 0;
+          lydVideo.play().catch(() => {});
+          window.setTimeout(() => {
+            lydPanel.classList.add("is-animated-visible");
+            lydPanel.classList.add("is-real-visible");
+          }, 1000);
+        }
+      }
+
+      const dimensionalityPanel = document.querySelector(
+        ".dimensionality-panel",
+      );
+      let dimensionalityClickCount = 0;
+
+      function revealDimensionalityStep() {
+        dimensionalityClickCount += 1;
+
+        if (dimensionalityClickCount === 1) {
+          dimensionalityPanel.classList.add("is-caption-visible");
+        } else if (dimensionalityClickCount === 2) {
+          dimensionalityPanel.classList.add("is-final-visible");
+        }
+      }
+
+      investigativePanel.addEventListener("click", revealInvestigativeStep);
+      potentialPanel.addEventListener("click", revealPotentialStep);
+      lydPanel.addEventListener("click", revealLydStep);
+      dimensionalityPanel.addEventListener(
+        "click",
+        revealDimensionalityStep,
+      );
+
+      const materialGesturePanel = document.querySelector(
+        ".material-gesture-panel",
+      );
+      const materialStates = Array.from(
+        materialGesturePanel.querySelectorAll(".material-state"),
+      );
+      let materialSequenceStarted = false;
+
+      function runMaterialSequence() {
+        if (materialSequenceStarted) return;
+        materialSequenceStarted = true;
+
+        let currentState = 0;
+
+        function showNextMaterialState() {
+          const nextState = currentState + 1;
+          if (nextState >= materialStates.length) return;
+
+          if (nextState >= 2) {
+            materialStates[currentState].style.transition = "none";
+            materialStates[nextState].style.transition = "none";
+          }
+
+          materialStates[nextState].style.opacity = 1;
+          materialStates[currentState].style.opacity = 0;
+          currentState = nextState;
+
+          if (currentState < materialStates.length - 1) {
+            window.setTimeout(showNextMaterialState, 600);
+          }
+        }
+
+        window.setTimeout(showNextMaterialState, 1400);
+      }
+
+      const materialObserver = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          runMaterialSequence();
+          materialObserver.disconnect();
+        }
+      });
+
+      materialObserver.observe(materialGesturePanel);
+
+      const allTogetherPanel = document.querySelector(
+        ".all-together-panel",
+      );
+
+      function revealAllTogetherStep() {
+        allTogetherPanel.classList.add("is-final-visible");
+      }
+
+      allTogetherPanel.addEventListener("click", revealAllTogetherStep);
+
+      const kashmirPanel = document.querySelector(".kashmir-panel");
+      const kashmirStates = Array.from(
+        kashmirPanel.querySelectorAll(".kashmir-state"),
+      );
+      let kashmirStateIndex = 0;
+
+      function revealKashmirStep() {
+        if (kashmirStateIndex >= kashmirStates.length - 1) return;
+
+        const nextStateIndex = kashmirStateIndex + 1;
+        kashmirStates[nextStateIndex].style.opacity = 1;
+        kashmirStates[kashmirStateIndex].style.opacity = 0;
+        kashmirStateIndex = nextStateIndex;
+      }
+
+      kashmirPanel.addEventListener("click", revealKashmirStep);
+
+      function revealVisiblePanelStep() {
+        const revealPanels = [
+          { element: investigativePanel, reveal: revealInvestigativeStep },
+          { element: potentialPanel, reveal: revealPotentialStep },
+          {
+            element: document.querySelector(".lyd-section"),
+            reveal: revealLydStep,
+          },
+          {
+            element: dimensionalityPanel,
+            reveal: revealDimensionalityStep,
+          },
+          {
+            element: allTogetherPanel,
+            reveal: revealAllTogetherStep,
+          },
+          {
+            element: kashmirPanel,
+            reveal: revealKashmirStep,
+          },
+        ];
+
+        const activePanel = revealPanels
+          .map((panel) => {
+            const bounds = panel.element.getBoundingClientRect();
+            const visibleHeight = Math.max(
+              0,
+              Math.min(bounds.bottom, window.innerHeight) -
+                Math.max(bounds.top, 0),
+            );
+            return { ...panel, visibleHeight };
+          })
+          .sort((a, b) => b.visibleHeight - a.visibleHeight)[0];
+
+        if (activePanel?.visibleHeight > 0) activePanel.reveal();
+      }
+
+      function handleSpacebarReveal(event) {
+        const isSpacebar =
+          event.code === "Space" ||
+          event.key === " " ||
+          event.key === "Spacebar";
+
+        const target = event.target;
+        const isEditable =
+          target instanceof HTMLElement &&
+          (target.isContentEditable ||
+            target.matches("input, textarea, select, button"));
+
+        if (isSpacebar && !event.repeat && !isEditable) {
+          event.preventDefault();
+          event.stopPropagation();
+          revealVisiblePanelStep();
+        }
+      }
+
+      document.addEventListener("keydown", handleSpacebarReveal, true);
+      document.addEventListener(
+        "pointerdown",
+        () => document.body.focus({ preventScroll: true }),
+        true,
+      );
+    </script>
   </body>
 </html>
