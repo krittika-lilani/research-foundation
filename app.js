@@ -1,7 +1,7 @@
-const investigativeSequence = document.querySelector(
+const investigativePanel = document.querySelector(".investigative-panel");
+const investigativeSection = document.querySelector(
   ".investigative-sequence",
 );
-const investigativePanel = document.querySelector(".investigative-panel");
 const investigativeStage = document.querySelector(".investigative-stage");
 const precedentImage = document.querySelector(".precedent-image");
 const investigativeQuote = document.querySelector(".investigative-quote");
@@ -10,11 +10,12 @@ function clamp(value, minimum, maximum) {
   return Math.min(Math.max(value, minimum), maximum);
 }
 
-function updateInvestigativeTransition() {
-  const sequenceRect = investigativeSequence.getBoundingClientRect();
-  const scrollDistance = investigativeSequence.offsetHeight - window.innerHeight;
-  const progress = clamp(-sequenceRect.top / scrollDistance, 0, 1);
-  const quoteProgress = clamp(progress / 0.72, 0, 1);
+let investigativeProgress = 0;
+let investigativeTransitioning = false;
+
+function renderInvestigativeTransition(progress) {
+  investigativeProgress = clamp(progress, 0, 1);
+  const quoteProgress = clamp(investigativeProgress, 0, 1);
   const stageScale = investigativeStage.clientWidth / 1440;
   const quoteWidth = investigativeQuote.offsetWidth / stageScale;
   const quoteHeight = investigativeQuote.offsetHeight / stageScale;
@@ -34,17 +35,47 @@ function updateInvestigativeTransition() {
   );
 }
 
+function animateInvestigativeTransition(targetProgress, onComplete) {
+  if (investigativeTransitioning) return;
+
+  investigativeTransitioning = true;
+  const startProgress = investigativeProgress;
+  const startTime = performance.now();
+  const duration = 1400;
+
+  function animate(now) {
+    const elapsed = clamp((now - startTime) / duration, 0, 1);
+    const eased =
+      elapsed < 0.5
+        ? 4 * elapsed * elapsed * elapsed
+        : 1 - Math.pow(-2 * elapsed + 2, 3) / 2;
+    const progress =
+      startProgress + (targetProgress - startProgress) * eased;
+
+    renderInvestigativeTransition(progress);
+
+    if (elapsed < 1) {
+      window.requestAnimationFrame(animate);
+      return;
+    }
+
+    investigativeTransitioning = false;
+    onComplete?.();
+  }
+
+  window.requestAnimationFrame(animate);
+}
+
 function revealInvestigativeStep() {
   if (!investigativePanel.classList.contains("is-quote-revealed")) {
     investigativePanel.classList.add("is-quote-revealed");
   }
 }
 
-window.addEventListener("scroll", updateInvestigativeTransition, {
-  passive: true,
-});
-window.addEventListener("resize", updateInvestigativeTransition);
-updateInvestigativeTransition();
+window.addEventListener("resize", () =>
+  renderInvestigativeTransition(investigativeProgress),
+);
+renderInvestigativeTransition(0);
 
 const potentialPanel = document.querySelector(".potential-panel");
 let potentialClickCount = 0;
@@ -233,6 +264,7 @@ function handleSpacebarReveal(event) {
   if (isSpacebar && !event.repeat && !isEditable) {
     event.preventDefault();
     event.stopPropagation();
+    event.stopImmediatePropagation();
     revealVisiblePanelStep();
   }
 }
@@ -243,3 +275,119 @@ document.addEventListener(
   () => document.body.focus({ preventScroll: true }),
   true,
 );
+
+let bombResultLocked = false;
+let bombResultAnimationComplete = false;
+let bombResultQuietTimer = 0;
+let bombResultFadeTimer = 0;
+let fullPageController = null;
+const fullPageSectionStorageKey = "research-foundation-active-section";
+const fullPageSectionCount = document.querySelectorAll(
+  "#fullpage > .section",
+).length;
+const savedFullPageSectionIndex = Number.parseInt(
+  window.sessionStorage.getItem(fullPageSectionStorageKey) ?? "0",
+  10,
+);
+const reloadFullPageSectionIndex = Number.isInteger(savedFullPageSectionIndex)
+  ? clamp(savedFullPageSectionIndex, 0, fullPageSectionCount - 1)
+  : 0;
+let restoringFullPageSection = reloadFullPageSectionIndex > 0;
+
+if ("scrollRestoration" in window.history) {
+  window.history.scrollRestoration = "manual";
+}
+
+function unlockBombResultSection() {
+  window.clearTimeout(bombResultQuietTimer);
+  bombResultLocked = false;
+  fullPageController?.setAllowScrolling(true);
+}
+
+function waitForFreshWheelGesture() {
+  window.clearTimeout(bombResultQuietTimer);
+  bombResultQuietTimer = window.setTimeout(unlockBombResultSection, 280);
+}
+
+function playBombResultSection() {
+  window.clearTimeout(bombResultFadeTimer);
+  window.clearTimeout(bombResultQuietTimer);
+  bombResultLocked = true;
+  bombResultAnimationComplete = false;
+  fullPageController?.setAllowScrolling(false);
+  fullPageController?.setKeyboardScrolling(false);
+  investigativePanel.classList.add("is-quote-revealed");
+  renderInvestigativeTransition(0);
+
+  animateInvestigativeTransition(1, () => {
+    bombResultFadeTimer = window.setTimeout(() => {
+      bombResultAnimationComplete = true;
+      fullPageController?.setKeyboardScrolling(true);
+      waitForFreshWheelGesture();
+    }, 1400);
+  });
+}
+
+document.addEventListener(
+  "wheel",
+  (event) => {
+    if (!bombResultLocked) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    if (bombResultAnimationComplete) waitForFreshWheelGesture();
+  },
+  { capture: true, passive: false },
+);
+
+if (window.fullpage) {
+  fullPageController = new fullpage("#fullpage", {
+    licenseKey: "",
+    sectionSelector: ".section",
+    autoScrolling: true,
+    fitToSection: true,
+    scrollingSpeed: 1100,
+    keyboardScrolling: true,
+    recordHistory: false,
+    scrollBar: false,
+    verticalCentered: false,
+    afterRender() {
+      if (!restoringFullPageSection) return;
+
+      window.setTimeout(() => {
+        fullPageController?.silentMoveTo(reloadFullPageSectionIndex + 1);
+      }, 0);
+    },
+    onLeave(origin, destination, direction) {
+      if (origin.item !== investigativeSection) return true;
+      if (bombResultLocked) return false;
+
+      if (direction === "down" && investigativeProgress < 1) {
+        playBombResultSection();
+        return false;
+      }
+
+      return true;
+    },
+    afterLoad(origin, destination, direction) {
+      if (destination.item === investigativeSection) {
+        renderInvestigativeTransition(direction === "up" ? 1 : 0);
+      }
+
+      if (
+        restoringFullPageSection &&
+        destination.index !== reloadFullPageSectionIndex
+      ) {
+        return;
+      }
+
+      restoringFullPageSection = false;
+      window.sessionStorage.setItem(
+        fullPageSectionStorageKey,
+        String(destination.index),
+      );
+    },
+  });
+}

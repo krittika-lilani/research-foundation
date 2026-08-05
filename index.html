@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Krittika Lilani</title>
 
-    <link rel="stylesheet" href="styles.css?v=20260803-3" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/fullpage.js@4.0.37/dist/fullpage.min.css"
+    />
+    <link rel="stylesheet" href="styles.css?v=20260804-single-bomb-preview" />
     <script>
       const siteCacheKey = "research-foundation";
 
@@ -36,7 +40,8 @@
   </head>
 
   <body tabindex="-1">
-    <section class="panel">
+    <main id="fullpage">
+      <section class="section panel">
       <div class="design-stage">
         <img
           class="stage-frame"
@@ -44,9 +49,9 @@
           alt="Research presentation introduction"
         />
       </div>
-    </section>
+      </section>
 
-    <section class="investigative-sequence">
+    <section class="section investigative-sequence">
       <div class="panel investigative-panel">
         <div class="design-stage investigative-stage">
           <img
@@ -76,11 +81,22 @@
       </div>
     </section>
 
-    <section class="panel potential-panel">
+    <section class="section panel potential-panel">
       <div class="design-stage potential-stage">
         <img
+          class="potential-base-image"
           src="images/02-potential-history.png?v=20260803"
           alt="Potential History research frame"
+        />
+        <img
+          class="potential-fragment-image potential-fragment-image--36"
+          src="images/02-potential-fragment-36.png"
+          alt="Display of fragmented sculptural objects"
+        />
+        <img
+          class="potential-fragment-image potential-fragment-image--37"
+          src="images/02-potential-fragment-37.png"
+          alt="Hands examining fragmented archival material"
         />
 
         <p class="potential-caption">the past is not finished</p>
@@ -111,14 +127,19 @@
       </div>
     </section>
 
-    <section class="panel lyd-section">
+    <section class="section panel lyd-section">
       <div class="design-stage lyd-panel">
         <img
           class="lyd-base-image"
           src="images/03-lyd.png?v=20260803"
           alt="Lyd research frame"
         />
-        <video class="lyd-video" preload="metadata" playsinline>
+        <video
+          class="lyd-video"
+          preload="metadata"
+          playsinline
+          data-keepplaying
+        >
           <source src="media/lyd-recording.mp4?v=20260803" type="video/mp4" />
         </video>
         <div class="lyd-video-copy">
@@ -167,7 +188,7 @@
       </div>
     </section>
 
-    <section class="panel dimensionality-panel">
+    <section class="section panel dimensionality-panel">
       <div class="design-stage dimensionality-stage">
         <img
           class="dimensionality-base-image"
@@ -186,7 +207,7 @@
       </div>
     </section>
 
-    <section class="panel material-gesture-panel">
+    <section class="section panel material-gesture-panel">
       <div class="design-stage">
         <img
           class="material-state"
@@ -221,7 +242,7 @@
       </div>
     </section>
 
-    <section class="panel all-together-panel">
+    <section class="section panel all-together-panel">
       <div class="design-stage">
         <img
           class="all-together-state all-together-initial"
@@ -236,7 +257,7 @@
       </div>
     </section>
 
-    <section class="panel kashmir-panel">
+    <section class="section panel kashmir-panel">
       <div class="design-stage">
         <img
           class="kashmir-state"
@@ -245,28 +266,33 @@
         />
         <img
           class="kashmir-state"
-          src="images/07-kashmir-2.png?v=20260803"
+          src="images/07-kashmir-intro.png"
           alt="Kashmir research frame, state 2"
         />
         <img
           class="kashmir-state"
-          src="images/07-kashmir-3.png?v=20260803"
+          src="images/07-kashmir-2.png?v=20260803"
           alt="Kashmir research frame, state 3"
         />
         <img
           class="kashmir-state"
-          src="images/07-kashmir-4.png?v=20260803"
+          src="images/07-kashmir-3.png?v=20260803"
           alt="Kashmir research frame, state 4"
         />
         <img
           class="kashmir-state"
-          src="images/07-kashmir-5.png?v=20260803"
+          src="images/07-kashmir-4.png?v=20260803"
           alt="Kashmir research frame, state 5"
+        />
+        <img
+          class="kashmir-state"
+          src="images/07-kashmir-5.png?v=20260803"
+          alt="Kashmir research frame, state 6"
         />
       </div>
     </section>
 
-    <section class="panel end-panel">
+    <section class="section panel end-panel">
       <div class="design-stage">
         <img
           class="stage-frame"
@@ -274,8 +300,10 @@
           alt="Closing research questions"
         />
       </div>
-    </section>
+      </section>
+    </main>
 
-    <script src="app.js?v=20260803-2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullpage.js@4.0.37/dist/fullpage.min.js"></script>
+    <script src="app.js?v=20260805-reload-restore-preview"></script>
   </body>
 </html>

@@ -10,6 +10,11 @@ body {
   background: #fff;
 }
 
+#fullpage,
+.section {
+  background: #fff;
+}
+
 .panel {
   position: relative;
   width: 100vw;
@@ -63,12 +68,11 @@ body {
 
 .investigative-sequence {
   position: relative;
-  height: 200vh;
+  height: 100vh;
 }
 
 .investigative-panel {
-  position: sticky;
-  top: 0;
+  position: relative;
 }
 
 .investigative-stage .bomb-image {
@@ -80,13 +84,37 @@ body {
   opacity: 1;
 }
 
-.potential-stage > img {
+.potential-base-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+.potential-fragment-image {
+  position: absolute;
+  z-index: 1;
+  left: 7.569444%;
+  width: 13.888889%;
+  height: auto;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.potential-fragment-image--36 {
+  top: 4.777778%;
+}
+
+.potential-fragment-image--37 {
+  top: 35.888889%;
+}
+
+.potential-panel.is-fragmentation-visible .potential-fragment-image {
+  opacity: 1;
 }
 
 .potential-caption,
@@ -148,7 +176,7 @@ body {
 
 .potential-description {
   width: 20.833333cqw;
-  color: #999;
+  color: #313131;
   font-size: 0.833333cqw;
   font-weight: 400;
   line-height: 1.55;
@@ -357,11 +385,11 @@ body {
   position: absolute;
   z-index: 1;
   top: 40.666667%;
-  left: 68.611111%;
+  left: 66.805556%;
   margin: 0;
   color: #333;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 0.972222cqw;
+  font-size: 1.296296cqw;
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: -0.022em;
@@ -465,4 +493,8 @@ body {
 
 .investigative-panel.is-quote-revealed .investigative-quote {
   opacity: 1;
+}
+
+.end-panel .fp-watermark a {
+  color: #fff !important;
 }
